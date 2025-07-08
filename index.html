@@ -8,37 +8,48 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
     body {
-      background-color: #f9fafb;
+      /* background: linear-gradient(135deg, #ffe3b3, #ff7e5f); */
       font-family: 'Segoe UI', Roboto, sans-serif;
     }
 
     .main-container {
-      max-width: 850px;
-      margin: 3rem auto;
-      background-color: white;
-      border-radius: 16px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
-      padding: 2rem 2.5rem;
-      border-top: 5px solid #e31f27;
+      max-width: 1200px;
+      margin: 1rem auto 0;
+      /* background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px); */
+      border-radius: 20px;
+      padding: 0 2.5rem;
+      /* box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12); */
+      /* border-top: 6px solid #ff3d00; */
     }
-      
-      .bccb_logo {
-        width: 250px;
-        max-width: 100%;
-      }
-      
-      .ticker_header {
-        margin-bottom: 2rem;
-      }
-      
-      .ticker_header p {
-        font-size: 16px;
-      }
+
+    .head_bg {
+        background: linear-gradient(135deg, #ffe3b3, #ff7e5f);
+        padding: 5px;
+    }
+
+    .header_text {
+        margin: 0;
+        padding: 2px;
+    }
+
+    .bccb_logo {
+      width: 250px;
+      max-width: 100%;
+    }
+
+    .ticker_header {
+      margin-bottom: 2rem;
+    }
+
+    .ticker_header p {
+      font-size: 16px;
+    }
 
     .form-title {
       font-size: 1.8rem;
       font-weight: 700;
-      color: #e31f27;
+      color: #ff3d00;
       text-align: left;
       margin-bottom: 0.4rem;
     }
@@ -56,12 +67,13 @@
       padding: 0.7rem;
       font-size: 0.95rem;
       transition: all 0.2s ease;
+      background-color: white;
     }
 
     .form-control:focus,
     .form-select:focus {
-      border-color: #e31f27;
-      box-shadow: 0 0 0 0.2rem rgba(227, 31, 39, 0.2);
+      border-color: #ff3d00;
+      box-shadow: 0 0 0 0.2rem rgba(255, 61, 0, 0.2);
     }
 
     .file-upload-area {
@@ -69,15 +81,15 @@
       border-radius: 8px;
       padding: 2rem;
       text-align: center;
-      background-color: #fafafa;
+      background-color: #fff5f5;
       transition: all 0.3s ease;
       cursor: pointer;
     }
 
     .file-upload-area:hover,
     .file-upload-area.dragover {
-      border-color: #e31f27;
-      background-color: #fff5f5;
+      border-color: #ff3d00;
+      background-color: #ffe8e8;
     }
 
     .upload-text {
@@ -86,7 +98,7 @@
     }
 
     .btn-browse {
-      background: linear-gradient(to right, #f20000, #fd6502 51%, red 100%);
+      background: linear-gradient(90deg, #ff512f, #dd2476);
       border: none;
       padding: 0.5rem 1.5rem;
       border-radius: 6px;
@@ -95,7 +107,7 @@
     }
 
     .btn-submit {
-      background: linear-gradient(to right, #f20000, #fd6502 51%, red 100%);
+      background: linear-gradient(90deg, #ff512f, #dd2476);
       border: none;
       padding: 0.7rem 2rem;
       border-radius: 8px;
@@ -110,15 +122,16 @@
 
     .btn-cancel {
       background-color: transparent;
-      border: 2px solid #e31f27;
-      color: #e31f27;
+      border: 2px solid #ff3d00;
+      color: #ff3d00;
       padding: 0.7rem 2rem;
       font-weight: 600;
       border-radius: 8px;
+      transition: all 0.3s ease;
     }
 
     .btn-cancel:hover {
-      background-color: #fbe9e9;
+      background-color: #ffe8e8;
     }
 
     .file-list {
@@ -141,246 +154,149 @@
       border: none;
       background: none;
     }
-
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top" style="z-index: 1030;">
-  <div class="container-fluid px-4">
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="https://hive.forms.usercontent.microsoft/images/e403cd7f-95df-41f5-b29b-1cb07a552090/63bc5bd2-cb5a-455a-b549-510ca33cd7e6/T3ZH1ZV8L2ZFGSVXLYRCNPO6TM/294cfd9e-179e-4fab-bd83-945252e3b37b" class="bccb_logo"/>
-    </a>
-  </div>
-</nav>
-
-
-    <!-- Main Content -->
-<div class="container">
-    <div class="main-container">
-      <div class="ticker_header">
-        <h1 class="form-title">Grievance Portal</h1>
-      <p>Please submit your Grievance here to enable us to resolve it promptly.</p>
-      </div>
-      <form id="supportTicketForm">
-        <!-- Row 1 -->
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="customerName" class="form-label">Name</label>
-            <input type="text" class="form-control" id="customerName" placeholder="Enter your full name" required>
-          </div>
-          <div class="col-md-6">
-            <label for="customerId" class="form-label">Customer ID</label>
-            <input type="text" class="form-control" id="customerId" placeholder="Enter your customer ID" required>
-          </div>
+        <!-- Navigation -->
+    <header class="creative-header text-white pt-3 pb-3 px-4 text-center position-relative" >
+        <div class="brand-pill text-danger d-inline-flex align-items-center gap-2 px-5 py-2 rounded-pill mb-3" style="width: 1200px;">
+            <img src="https://hive.forms.usercontent.microsoft/images/e403cd7f-95df-41f5-b29b-1cb07a552090/63bc5bd2-cb5a-455a-b549-510ca33cd7e6/T3ZH1ZV8L2ZFGSVXLYRCNPO6TM/294cfd9e-179e-4fab-bd83-945252e3b37b" alt="BCCB Logo" style="height: 80px; border-radius: 8px">
+            <!-- <strong>BASSEIN CATHOLIC CO-OPERATIVE BANK LTD</strong> -->
         </div>
+    </header>
 
-        <!-- Row 2 -->
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="mobileNo" class="form-label">Mobile No</label>
-            <input type="tel" class="form-control" id="mobileNo" placeholder="Enter your phone number" required>
-          </div>
-          <div class="col-md-6">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="Enter your email address" required>
-          </div>
-        </div>
+    <div class="container">
+        <form id="grievanceForm">
+            <div class="main-container">
+                <!-- Section 1: Query / Feedback / Complaint -->
+                <div class="mb-4 rounded border">
+                    <div class="head_bg">
+                        <h5 class="header_text text-danger fw-bold">Query / Feedback / Complaint</h5>
+                    </div>
 
-        <!-- Row 3 -->
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="accountNo" class="form-label">Account No</label>
-            <input type="text" class="form-control" id="accountNo" placeholder="Enter your account number">
-          </div>
-          <div class="col-md-6">
-            <label for="branch" class="form-label">Branch</label>
-            <select class="form-select" id="branch" required>
-  <option value="">Select your branch</option>
-  <option value="Agashi">Agashi</option>
-  <option value="Ahmednagar">Ahmednagar</option>
-  <option value="Akurdi">Akurdi</option>
-  <option value="Ambadi Road">Ambadi Road</option>
-  <option value="Arnala">Arnala</option>
-  <option value="Ashokvan">Ashokvan</option>
-  <option value="Bhayandar">Bhayandar</option>
-  <option value="Boisar">Boisar</option>
-  <option value="Borivali">Borivali</option>
-  <option value="Chandansar">Chandansar</option>
-  <option value="Charkop">Charkop</option>
-  <option value="Dahanu">Dahanu</option>
-  <option value="Dahisar">Dahisar</option>
-  <option value="Dombivli">Dombivli</option>
-  <option value="Gokhivare">Gokhivare</option>
-  <option value="Gorai">Gorai</option>
-  <option value="Jogeshwari">Jogeshwari</option>
-  <option value="Juchandra">Juchandra</option>
-  <option value="Kalyan">Kalyan</option>
-  <option value="Kandarpada">Kandarpada</option>
-  <option value="Kandivali">Kandivali</option>
-  <option value="Kelwe Road">Kelwe Road</option>
-  <option value="Mira Road">Mira Road</option>
-  <option value="Nalasopara">Nalasopara</option>
-  <option value="Naigaon">Naigaon</option>
-  <option value="Nandgaon">Nandgaon</option>
-  <option value="Navapur">Navapur</option>
-  <option value="Nerul">Nerul</option>
-  <option value="Nirmal">Nirmal</option>
-  <option value="Palghar">Palghar</option>
-  <option value="Panvel">Panvel</option>
-  <option value="Parel">Parel</option>
-  <option value="Pen">Pen</option>
-  <option value="Saphale">Saphale</option>
-  <option value="Thane">Thane</option>
-  <option value="Ulhasnagar">Ulhasnagar</option>
-  <option value="Umroli">Umroli</option>
-  <option value="Uttan">Uttan</option>
-  <option value="Vasai">Vasai</option>
-  <option value="Virar">Virar</option>
-  <option value="Wadala">Wadala</option>
-  <option value="Wagholi">Wagholi</option>
-</select>
+                    <div class="row p-4">
+                        <div class="col-md-6 mb-3">
+                            <label for="product" class="form-label">Product</label>
+                            <select class="form-select" id="product" required>
+                                <option value="">Choose a category</option>
+                                <option value="deposit-account">Deposit Account</option>
+                                <option value="loan-products">Loan Products</option>
+                                <option value="atm-cards">ATM & CARDS</option>
+                                <option value="digital-banking-services">Digital Banking Services</option>
+                                <option value="remittance-payments">Remittance & Payments</option>
+                                <option value="customer-service">Customer Service & In-Branch Issues</option>
+                                <option value="fee-charges">Fee & Charges</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
 
-          </div>
-        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="subCategory" class="form-label">Sub Category</label>
+                            <select class="form-select" id="subCategory" required>
+                                <option value="">Choose a sub-category</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center pb-3">
+                        <button type="button" class="btn btn-submit" id="continueBtn">Continue</button>
+                    </div>
+                </div>
 
-        <!-- Row 4 -->
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label for="product" class="form-label">Product</label>
-            <select class="form-select" id="product" required>
-              <option value="">Choose a category</option>
-              <option value="deposit-account">Deposit Account</option>
-              <option value="loan-products">Loan Products</option>
-              <option value="atm-cards">ATM & CARDS</option>
-              <option value="digital-banking-services">Digital Banking Services</option>
-              <option value="remittance-payments">Remittance & Payments</option>
-              <option value="customer-service">Customer Service & In-Branch Issues</option>
-              <option value="fee-charges">Fee & Charges</option>
-              <option value="others">Others</option>
-            </select>
-          </div>
-          <div class="col-md-6">
-            <label for="subCategory" class="form-label">Sub Category</label>
-            <select class="form-select" id="subCategory" required>
-              <option value="">Choose a sub-category</option>
-            </select>
-          </div>
-        </div>
+                <!-- Section 2: Additional Details -->
+                <div class="rounded border mb-4" id="customerDetailsSection" style="display: none;">
+                    <div class="head_bg">
+                        <h5 class="header_text text-danger fw-bold">Additional Details</h5>
+                    </div>
 
-        <!-- More Details -->
-        <div class="mb-4">
-          <label for="moreDetails" class="form-label">More Details</label>
-          <textarea class="form-control" id="moreDetails" rows="5" placeholder="Provide additional details about your issue" required></textarea>
-        </div>
+                    <div class="p-3">
+                            <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="customerName" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="customerName" name="customerName" placeholder="Enter your full name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="customerId" class="form-label">Customer ID</label>
+                                <input type="text" class="form-control" id="customerId" name="customerId" placeholder="Enter your customer ID" required>
+                            </div>
+                        </div>
 
-        <!-- File Upload -->
-        <div class="mb-4">
-          <label class="form-label">Attach Files</label>
-          <div class="file-upload-area" id="fileUploadArea">
-            <div class="upload-text">Drag and drop files here or</div>
-            <button type="button" class="btn btn-browse" id="browseBtn">Browse</button>
-            <input type="file" id="fileInput" multiple style="display: none;">
-          </div>
-          <div class="file-list" id="fileList"></div>
-        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="mobileNo" class="form-label">Mobile No</label>
+                                <input type="tel" class="form-control" id="mobileNo" name="mobileNo" placeholder="Enter your phone number" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email address" required>
+                            </div>
+                        </div>
 
-        <!-- Submit -->
-        <div class="d-flex justify-content-center gap-3">
-          <button type="submit" class="btn btn-submit">Submit Ticket</button>
-          <button type="button" class="btn btn-cancel" id="cancelBtn">Cancel</button>
-        </div>
-      </form>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="accountNo" class="form-label">Account No</label>
+                                <input type="text" class="form-control" id="accountNo" name="accountNo" placeholder="Enter your account number">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="branch" class="form-label">Branch</label>
+                                <select class="form-select" id="branch" name="branch" required></select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="moreDetails" class="form-label">More Details</label>
+                            <textarea class="form-control" id="moreDetails" name="moreDetails" rows="5" placeholder="Provide additional details about your issue" required></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Attach Files</label>
+                            <div class="file-upload-area" id="fileUploadArea">
+                                <div class="upload-text">Drag and drop files here or</div>
+                                <button type="button" class="btn btn-browse" id="browseBtn">Browse</button>
+                                <input type="file" id="fileInput" name="attachments" multiple style="display: none;">
+                            </div>
+                            <div class="file-list" id="fileList"></div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center gap-3 pb-3">
+                        <button type="submit" class="btn btn-submit" id="submitBtn">Submit Ticket</button>
+                        <button type="button" class="btn btn-cancel" id="cancelBtn">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-  </div>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-  
-  <script>
+    <script>
     // Sub-category options based on product selection
     const subCategories = {
-        'deposit-account': [
-            'Account not open',
-            'Wrong charges levied',
-            'Delay in account opening',
-            'Passbook not updated',
-            'Cheque book delayed',
-            'Passbook printing machine not working',
-            'Printer is not working',
-            'Interest on FD'
-        ],
-        'loan-products': [
-            'Delay in loan disbursement',
-            'Incorrect EMI',
-            'Interest rates',
-            'Payment/foreclosure problem',
-            'SI/ECS changes',
-            'Loan statement',
-            'CIBIL',
-            'Guarantor related Issues'
-        ],
-        'atm-cards': [
-            'ATM cash not dispensed but account debited',
-            'Card not working',
-            'Card lost/stolen',
-            'Unauthorised card transaction',
-            'Did not receive ATM/Debit Card',
-            'Issue in generating Green Pin',
-            'Debit card expired',
-            'PIN forgotten'
-        ],
-        'digital-banking-services': [
-            'Mobile banking login issue',
-            'UPI transaction failure',
-            'Fund transferred not credited',
-            'Net banking issue',
-            'Password issue',
-            'Wrong transaction',
-            'UPI related Fraud'
-        ],
-        'remittance-payments': [
-            'IMPS/NEFT/RTGS delay or failure',
-            'Wrong beneficiary credited',
-            'ECS/NACH bounce'
-        ],
-        'customer-service': [
-            'Passbook printing',
-            'Account closure delay',
-            'Documents not found',
-            'TDS certificate not received',
-            'Wrongly debited charges',
-            'No explanation provided',
-            'Denial for account opening'
-        ],
-        'fee-charges': [
-            'Unexplained fees/charges',
-            'Excess service charge',
-            'Incorrect penalty application'
-        ],
-        'others': [
-            'Issue',
-            'SMS/E-mail not received',
-            'Wrong message received'
-        ]
+        'deposit-account': ['Account not open', 'Wrong charges levied', 'Delay in account opening', 'Passbook not updated'],
+        'loan-products': ['Delay in loan disbursement', 'Incorrect EMI', 'Interest rates', 'Payment/foreclosure problem'],
+        'atm-cards': ['ATM cash not dispensed', 'Card not working', 'Card lost/stolen', 'Unauthorised transaction'],
+        'digital-banking-services': ['Mobile banking login issue', 'UPI transaction failure', 'Net banking issue'],
+        'remittance-payments': ['IMPS/NEFT/RTGS delay', 'Wrong beneficiary credited', 'ECS/NACH bounce'],
+        'customer-service': ['Passbook printing', 'Account closure delay', 'Documents not found'],
+        'fee-charges': ['Unexplained fees/charges', 'Excess service charge'],
+        'others': ['Issue', 'SMS/E-mail not received']
     };
 
-    // DOM elements
+    // Initialize form elements
     const productSelect = document.getElementById('product');
     const subCategorySelect = document.getElementById('subCategory');
-    const fileUploadArea = document.getElementById('fileUploadArea');
-    const fileInput = document.getElementById('fileInput');
-    const browseBtn = document.getElementById('browseBtn');
-    const fileList = document.getElementById('fileList');
-    const form = document.getElementById('supportTicketForm');
-    const cancelBtn = document.getElementById('cancelBtn');
+    const continueBtn = document.getElementById('continueBtn');
+    const customerDetailsSection = document.getElementById('customerDetailsSection');
+    const form = document.getElementById('grievanceForm');
 
-    // Product change handler - single, clean logic
-    productSelect.addEventListener('change', function () {
+    // Populate sub-categories when product changes
+    productSelect.addEventListener('change', function() {
         const selectedProduct = this.value;
         subCategorySelect.innerHTML = '<option value="">Choose a sub-category</option>';
-
+        
         if (selectedProduct && subCategories[selectedProduct]) {
             subCategories[selectedProduct].forEach(subCat => {
                 const option = document.createElement('option');
@@ -391,110 +307,72 @@
         }
     });
 
-    // File upload functionality
-    let selectedFiles = [];
+    // Continue button handler
+    continueBtn.addEventListener('click', function() {
+        const product = productSelect.value;
+        const subCategory = subCategorySelect.value;
 
-    browseBtn.addEventListener('click', () => fileInput.click());
-    fileUploadArea.addEventListener('click', () => fileInput.click());
-    fileInput.addEventListener('change', handleFileSelect);
+        if (!product || !subCategory) {
+            alert('Please select both Product and Sub Category to proceed.');
+            return;
+        }
 
-    // Drag and drop functionality
-    fileUploadArea.addEventListener('dragover', (e) => {
+        customerDetailsSection.style.display = 'block';
+        continueBtn.style.display = 'none';
+        
+        // Smooth scroll to the customer details section
+        customerDetailsSection.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Form submission handler
+    form.addEventListener('submit', function(e) {
         e.preventDefault();
-        fileUploadArea.classList.add('dragover');
-    });
-
-    fileUploadArea.addEventListener('dragleave', () => {
-        fileUploadArea.classList.remove('dragover');
-    });
-
-    fileUploadArea.addEventListener('drop', (e) => {
-        e.preventDefault();
-        fileUploadArea.classList.remove('dragover');
-        const files = Array.from(e.dataTransfer.files);
-        addFiles(files);
-    });
-
-    function handleFileSelect(e) {
-        const files = Array.from(e.target.files);
-        addFiles(files);
-    }
-
-    function addFiles(files) {
-        files.forEach(file => {
-            if (!selectedFiles.find(f => f.name === file.name && f.size === file.size)) {
-                selectedFiles.push(file);
+        
+        // Validate all required fields
+        const requiredFields = form.querySelectorAll('[required]');
+        let isValid = true;
+        
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                field.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                field.classList.remove('is-invalid');
             }
         });
-        updateFileList();
-    }
 
-    function updateFileList() {
-        fileList.innerHTML = '';
-        selectedFiles.forEach((file, index) => {
-            const fileItem = document.createElement('div');
-            fileItem.className = 'file-item';
-            fileItem.innerHTML = `
-                <span><i class="fas fa-file me-2"></i>${file.name} (${formatFileSize(file.size)})</span>
-                <button type="button" class="file-remove" onclick="removeFile(${index})">
-                    <i class="fas fa-times"></i>
-                </button>
-            `;
-            fileList.appendChild(fileItem);
-        });
-    }
+        if (!isValid) {
+            alert('Please fill in all required fields.');
+            return;
+        }
 
-    function removeFile(index) {
-        selectedFiles.splice(index, 1);
-        updateFileList();
-    }
+        // Create FormData object for submission
+        const formData = new FormData(form);
+        formData.append('product', productSelect.value);
+        formData.append('subCategory', subCategorySelect.value);
 
-    function formatFileSize(bytes) {
-        if (bytes === 0) return '0 Bytes';
-        const k = 1024;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-    }
-
-    // Form submission
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const formData = new FormData();
-        formData.append('customerName', document.getElementById('customerName').value);
-        formData.append('customerId', document.getElementById('customerId').value);
-        formData.append('mobileNo', document.getElementById('mobileNo').value);
-        formData.append('email', document.getElementById('email').value);
-        formData.append('accountNo', document.getElementById('accountNo').value);
-        formData.append('branch', document.getElementById('branch').value);
-        formData.append('product', document.getElementById('product').value);
-        formData.append('subCategory', document.getElementById('subCategory').value);
-        formData.append('moreDetails', document.getElementById('moreDetails').value);
-
-        selectedFiles.forEach(file => {
-            formData.append('attachments', file);
-        });
-
-        alert('Support ticket submitted successfully! You will receive a confirmation email shortly.');
-
+        // Here you would typically send the formData to your server
+        // For demonstration, we'll just show a success message
+        alert('Support ticket submitted successfully!');
+        
+        // Reset the form
         form.reset();
-        selectedFiles = [];
-        updateFileList();
+        customerDetailsSection.style.display = 'none';
+        continueBtn.style.display = 'block';
         subCategorySelect.innerHTML = '<option value="">Choose a sub-category</option>';
     });
 
-    // Cancel button
-    cancelBtn.addEventListener('click', function () {
+    // Cancel button handler
+    document.getElementById('cancelBtn').addEventListener('click', function() {
         if (confirm('Are you sure you want to cancel? All entered data will be lost.')) {
             form.reset();
-            selectedFiles = [];
-            updateFileList();
+            customerDetailsSection.style.display = 'none';
+            continueBtn.style.display = 'block';
             subCategorySelect.innerHTML = '<option value="">Choose a sub-category</option>';
         }
     });
 </script>
 
-  
+
 </body>
 </html>
