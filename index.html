@@ -154,6 +154,13 @@
       border: none;
       background: none;
     }
+
+    .is-valid {
+        background-position: right calc(0.375em + 0.1875rem) center;
+        background-repeat: no-repeat;
+        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23198754' viewBox='0 0 16 16'%3e%3cpath d='M16 2L6 12 0 6l2-2 4 4L14 0z'/%3e%3c/svg%3e");
+    }
     </style>
 </head>
 <body>
@@ -171,7 +178,7 @@
                 <!-- Section 1: Query / Feedback / Complaint -->
                 <div class="mb-4 rounded border">
                     <div class="head_bg">
-                        <h5 class="header_text text-danger fw-bold">Query / Feedback / Complaint</h5>
+                        <h5 class="header_text text-danger fw-bold">Grievance</h5>
                     </div>
 
                     <div class="row p-4">
@@ -179,15 +186,18 @@
                             <label for="product" class="form-label">Product</label>
                             <select class="form-select" id="product" required>
                                 <option value="">Choose a category</option>
-                                <option value="deposit-account">Deposit Account</option>
-                                <option value="loan-products">Loan Products</option>
-                                <option value="atm-cards">ATM & CARDS</option>
-                                <option value="digital-banking-services">Digital Banking Services</option>
-                                <option value="remittance-payments">Remittance & Payments</option>
-                                <option value="customer-service">Customer Service & In-Branch Issues</option>
-                                <option value="fee-charges">Fee & Charges</option>
-                                <option value="others">Others</option>
+                                <option value="ATM">ATM</option>
+                                <option value="BANK ACCOUNT">BANK ACCOUNT</option>
+                                <option value="DEBIT CARDS">DEBIT CARDS</option>
+                                <option value="LOAN ACCOUNTS">LOAN ACCOUNTS</option> <!-- Fixed from LOAN ACCOUNTS to LOAN ACCOUNT -->
+                                <option value="UPI">UPI</option>
+                                <option value="NET AND MOBILE BANKING">NET AND MOBILE BANKING</option>
+                                <option value="REMITTANCE AND PAYMENT">REMITTANCE AND PAYMENT</option>
+                                <option value="FRAUD RELATED">FRAUD RELATED</option> <!-- Added -->
+                                <option value="OTP RELATED">OTP RELATED</option>
+                                <option value="OTHER ISSUES">OTHER ISSUES</option>
                             </select>
+                            <div class="invalid-feedback">Please select a product category</div>
                         </div>
 
                         <div class="col-md-6 mb-3">
@@ -195,6 +205,7 @@
                             <select class="form-select" id="subCategory" required>
                                 <option value="">Choose a sub-category</option>
                             </select>
+                            <div class="invalid-feedback">Please select a sub-category</div>
                         </div>
                     </div>
                     
@@ -210,42 +221,52 @@
                     </div>
 
                     <div class="p-3">
-                            <div class="row">
+                        <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="customerName" class="form-label">Name</label>
                                 <input type="text" class="form-control" id="customerName" name="customerName" placeholder="Enter your full name" required>
+                                <div class="invalid-feedback">Please enter your name</div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="customerId" class="form-label">Customer ID</label>
-                                <input type="text" class="form-control" id="customerId" name="customerId" placeholder="Enter your customer ID" required>
+                                <input type="text" class="form-control" id="customerId" name="customerId" placeholder="Enter your customer ID">
+                                <div class="invalid-feedback">Please enter your customer ID</div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="mobileNo" class="form-label">Mobile No</label>
-                                <input type="tel" class="form-control" id="mobileNo" name="mobileNo" placeholder="Enter your phone number" required>
+                                <input type="tel" class="form-control" id="mobileNo" name="mobileNo" placeholder="Enter your phone number" required pattern="[0-9]{10}">
+                                <div class="invalid-feedback">Please enter a valid 10-digit mobile number</div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email address" required>
+                                <div class="invalid-feedback">Please enter a valid email address</div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="accountNo" class="form-label">Account No</label>
-                                <input type="text" class="form-control" id="accountNo" name="accountNo" placeholder="Enter your account number">
+                                <input type="text" class="form-control" id="accountNo" name="accountNo" placeholder="Enter your account number" required>
+                                <div class="invalid-feedback">Please enter your account number</div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="branch" class="form-label">Branch</label>
-                                <select class="form-select" id="branch" name="branch" required></select>
+                                <select class="form-select" id="branch" name="branch">
+                                    <option value="">Select branch</option>
+                                    <!-- Branches will be loaded dynamically -->
+                                </select>
+                                <div class="invalid-feedback">Please select your branch</div>
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="moreDetails" class="form-label">More Details</label>
-                            <textarea class="form-control" id="moreDetails" name="moreDetails" rows="5" placeholder="Provide additional details about your issue" required></textarea>
+                            <textarea class="form-control" id="moreDetails" name="moreDetails" rows="5" placeholder="Provide additional details about your issue"></textarea>
+                            <div class="invalid-feedback">Please provide details about your issue</div>
                         </div>
 
                         <div class="mb-4">
@@ -270,109 +291,476 @@
 
 
 
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-    // Sub-category options based on product selection
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
     const subCategories = {
-        'deposit-account': ['Account not open', 'Wrong charges levied', 'Delay in account opening', 'Passbook not updated'],
-        'loan-products': ['Delay in loan disbursement', 'Incorrect EMI', 'Interest rates', 'Payment/foreclosure problem'],
-        'atm-cards': ['ATM cash not dispensed', 'Card not working', 'Card lost/stolen', 'Unauthorised transaction'],
-        'digital-banking-services': ['Mobile banking login issue', 'UPI transaction failure', 'Net banking issue'],
-        'remittance-payments': ['IMPS/NEFT/RTGS delay', 'Wrong beneficiary credited', 'ECS/NACH bounce'],
-        'customer-service': ['Passbook printing', 'Account closure delay', 'Documents not found'],
-        'fee-charges': ['Unexplained fees/charges', 'Excess service charge'],
-        'others': ['Issue', 'SMS/E-mail not received']
+        'ATM': ['UNAUTHORISED TRANSACTION', 'Cash not dispensed', 'Others'],
+        'BANK ACCOUNT': [
+            'Account Closure', 
+            'Account Opening', 
+            'Charges Related', 
+            'Cheque Book Related', 
+            'Statement Related', 
+            'Transaction Related', 
+            'ECS RELATED', 
+            'Government Schemes', 
+            'LOCKER RELATED',
+            'OTHERS'
+        ],
+        'DEBIT CARDS': [
+            'Report a failed transaction', 
+            'Debit card lost / stolen', 
+            'Unauthorised Card transaction', 
+            'Debit card expired', 
+            'ECOM/POS LIMIT',
+            'Others'
+        ],
+        'LOAN ACCOUNTS': [  // Changed from LOAN ACCOUNTS to LOAN ACCOUNT
+            'DISBURSEMENT RELATED', 
+            'INCORRECT EMI', 
+            'INTEREST RATE', 
+            'PAYMENT / FORECLOSURE', 
+            'LOAN STATEMENT', 
+            'CIBIL', 
+            'GUARANTOR RELATED ISSUES', 
+            'INSURANCE RELATED',
+            'OTHERS'
+        ],
+        'UPI': [
+            'Failed Transaction', 
+            'Unauthorised / Fraudulent', 
+            'Block my UPI services', 
+            'Others'
+        ],
+        'NET AND MOBILE BANKING': [
+            'FORGOT USERNAME / FORGOT PASSWORD',  // Fixed typo
+            'Digitouch LOGIN', 
+            'USER LOCKED',  // Fixed typo
+            'BILL PAYMENT (BBPS)', 
+            'OTHERS'
+        ],
+        'REMITTANCE AND PAYMENT': [
+            'IMPS/NEFT/RTGS FAILED', 
+            'IMPS/NEFT/RTGS DELAYED',
+            'OTHERS'
+        ],
+        'FRAUD RELATED': [  // Added new category
+            'SUSPICIOUS SMS EMAIL AND CALLS',
+            'OTHERS'
+        ],
+        'OTP RELATED': [  // Added new category
+            'Green pin OTP',
+            'NETBANKING OTP',
+            'SMS / EMAIL NOT RECEIVED',
+            'OTHERS'
+        ],
+        'OTHER ISSUES': [  // For remaining cases
+            'ECS/ NACH BOUNCE',
+            'EXCHANGE RATE RELATED',
+            'REMITTANCE REQUEST AT BRANCH',
+            'NRO/FCNR/NRE RELATED',
+            'OTHERS'
+        ]
     };
 
-    // Initialize form elements
+    const branches =["Agashi", "Ahmednagar", "Akurdi", "Ambadi Road", "Arnala", "Bandra", "Bangli",
+    "Bhabola",
+    "Bhayander",
+    "Bhayander-E",
+    "Bhiwandi",
+    "Bhuigaon",
+    "Boisar",
+    "Bolinj-Virar-W",
+    "Borivali",
+    "Chakan",
+    "Chandansar",
+    "Dadar",
+    "Dahanu",
+    "Fatima Nagar",
+    "Gass",
+    "Ghodbunder-Thane",
+    "Giriz",
+    "Gokhivare",
+    "Holi",
+    "Kalyan",
+    "Kaman",
+    "Kandivali",
+    "Kashimira",
+    "Kelve",
+    "Kudus-Tal-Wada",
+    "Malad",
+    "Manickpur",
+    "Marol",
+    "Merces",
+    "Mira Road",
+    "Mulgaon",
+    "Mulund",
+    "Naigaon",
+    "Naigaon -E",
+    "Nallasopara",
+    "Nallasopara Link Road",
+    "Nallasopara -W",
+    "Nanbhat",
+    "Nandakhal",
+    "Nashik",
+    "Nashik Road",
+    "Navghar",
+    "Nirmal",
+    "Palghar",
+    "Palli",
+    "Papdy",
+    "Sainath Nagar",
+    "Santacruz- Kalina",
+    "Saphale",
+    "Sativali",
+    "Talasari",
+    "Thane",
+    "Umrale",
+    "Umrale Extension",
+    "Uttan",
+    "Vashi",
+    "Virar",
+    "Zenda Bazar"
+]
+
+    const assignToMap = {
+        // BANK ACCOUNT
+        "Account Closure": "customerservice@bccb.co.in",
+        "Account Opening": "customerservice@bccb.co.in",
+        "Charges Related": "customerservice@bccb.co.in",
+        "Cheque Book Related": "customerservice@bccb.co.in",
+        "Statement Related": "customerservice@bccb.co.in",
+        "Transaction Related": "customerservice@bccb.co.in",
+        "ECS RELATED": "rtgs@bccb.co.in",
+        "Government Schemes": "customerservice@bccb.co.in",
+        "LOCKER RELATED": "customerservice@bccb.co.in",
+        "OTHERS": "customerservice@bccb.co.in",
+
+        // LOAN ACCOUNT
+        "DISBURSEMENT RELATED": "credit@bccb.co.in",
+        "INCORRECT EMI": "credit@bccb.co.in",
+        "INTEREST RATE": "credit@bccb.co.in",
+        "PAYMENT / FORECLOSURE": "credit@bccb.co.in",
+        "LOAN STATEMENT": "credit@bccb.co.in",
+        "CIBIL": "credit@bccb.co.in",
+        "GUARANTOR RELATED ISSUES": "credit@bccb.co.in",
+        "INSURANCE RELATED": "credit@bccb.co.in",
+        "OTHERS": "customerservice@bccb.co.in",
+
+        // Debit Cards
+        "Report a failed transaction": "imps.upi@bccb.co.in",
+        "Debit card lost / stolen": "corporate.netbanking@bccb.co.in",
+        "Unauthorised Card transaction": "cyberhelpline@bccb.co.in",
+        "Debit card expired": "customerservice@bccb.co.in",
+        "ECOM/POS LIMIT": "corporate.netbanking@bccb.co.in",
+        
+        // UPI
+        "Failed Transaction": "imps.upi@bccb.co.in",
+        "Unauthorised / Fraudulent": "cyberhelpline@bccb.co.in",
+        "Block my UPI services": "corporate.netbanking@bccb.co.in",
+        
+        // Net and Mobile Banking
+        "FORGOT USERNAME / FORGOT PASSWORD": "corporate.netbanking@bccb.co.in",
+        "Digitouch LOGIN": "corporate.netbanking@bccb.co.in",
+        "USER LOCKED": "corporate.netbanking@bccb.co.in",
+        "BILL PAYMENT (BBPS)": "imps.upi@bccb.co.in",
+        
+        // Remittance and Payment
+        "IMPS/NEFT/RTGS FAILED": "rtgs@bccb.co.in",
+        "IMPS/NEFT/RTGS DELAYED": "rtgs@bccb.co.in",
+        
+        // Fraud Related
+        "SUSPICIOUS SMS EMAIL AND CALLS": "cyberhelpline@bccb.co.in",
+        
+        // OTP Related
+        "Green pin OTP": "altern.gonsalves@bccb.co.in",
+        "NETBANKING OTP": "altern.gonsalves@bccb.co.in",
+        "SMS / EMAIL NOT RECEIVED": "altern.gonsalves@bccb.co.in",
+        
+        // Other categories
+        "ECS/ NACH BOUNCE": "forex@bccb.co.in",
+        "EXCHANGE RATE RELATED": "forex@bccb.co.in",
+        "REMITTANCE REQUEST AT BRANCH": "forex@bccb.co.in",
+        "NRO/FCNR/NRE RELATED": "forex@bccb.co.in",
+        
+        // Catch-all for any remaining "OTHERS"
+        "OTHERS": "customerservice@bccb.co.in"
+    };
+
+    // Form elements
+    const form = document.getElementById('grievanceForm');
     const productSelect = document.getElementById('product');
     const subCategorySelect = document.getElementById('subCategory');
     const continueBtn = document.getElementById('continueBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
     const customerDetailsSection = document.getElementById('customerDetailsSection');
-    const form = document.getElementById('grievanceForm');
+    const branchSelect = document.getElementById('branch');
+    const fileInput = document.getElementById('fileInput');
+    const browseBtn = document.getElementById('browseBtn');
+    const fileList = document.getElementById('fileList');
+    const submitBtn = document.getElementById('submitBtn');
 
-    // Populate sub-categories when product changes
-    productSelect.addEventListener('change', function() {
-        const selectedProduct = this.value;
-        subCategorySelect.innerHTML = '<option value="">Choose a sub-category</option>';
-        
-        if (selectedProduct && subCategories[selectedProduct]) {
-            subCategories[selectedProduct].forEach(subCat => {
-                const option = document.createElement('option');
-                option.value = subCat;
-                option.textContent = subCat;
-                subCategorySelect.appendChild(option);
-            });
+    const requiredFields = ['customerName', 'mobileNo', 'email', 'accountNo'];
+    //moreDetails
+
+    // Populate Branches
+    branches.forEach(branch => {
+        const option = new Option(branch, branch);
+        branchSelect.add(option);
+    });
+
+    // Populate Sub-categories on Product Change
+    productSelect.addEventListener('change', () => {
+        const options = subCategories[productSelect.value] || [];
+        subCategorySelect.innerHTML = `<option value="">Choose a sub-category</option>`;
+        options.forEach(item => subCategorySelect.add(new Option(item, item)));
+    });
+
+    // Sub-categories that require Branch to be mandatory
+    const branchRequiredSubcategories = [
+        'Debit card expired',
+        'Block my UPI services',
+        'Unauthorised / Fraudulent',
+        'IMPS/NEFT/RTGS FAILED' // Add more if needed
+    ];
+
+    // Toggle branch required status based on sub-category selection
+    subCategorySelect.addEventListener('change', () => {
+        const selectedSubCat = subCategorySelect.value.trim();
+        const isBranchRequired = branchRequiredSubcategories.includes(selectedSubCat);
+
+        if (isBranchRequired) {
+            branchSelect.setAttribute('required', 'required');
+            branchSelect.classList.add('tw-border-red-500'); // Optional Tailwind border red for emphasis
+        } else {
+            branchSelect.removeAttribute('required');
+            branchSelect.classList.remove('is-invalid', 'tw-border-red-500');
         }
     });
 
-    // Continue button handler
-    continueBtn.addEventListener('click', function() {
-        const product = productSelect.value;
-        const subCategory = subCategorySelect.value;
 
-        if (!product || !subCategory) {
-            alert('Please select both Product and Sub Category to proceed.');
-            return;
+    // Continue to Customer Details
+    continueBtn.addEventListener('click', () => {
+        const isProductValid = validateField(productSelect);
+        const isSubCategoryValid = validateField(subCategorySelect);
+
+        if (isProductValid && isSubCategoryValid) {
+            customerDetailsSection.style.display = 'block';
+            continueBtn.style.display = 'none';
+            customerDetailsSection.scrollIntoView({ behavior: 'smooth' });
         }
-
-        customerDetailsSection.style.display = 'block';
-        continueBtn.style.display = 'none';
-        
-        // Smooth scroll to the customer details section
-        customerDetailsSection.scrollIntoView({ behavior: 'smooth' });
     });
 
-    // Form submission handler
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Validate all required fields
-        const requiredFields = form.querySelectorAll('[required]');
-        let isValid = true;
-        
-        requiredFields.forEach(field => {
-            if (!field.value.trim()) {
-                field.classList.add('is-invalid');
-                isValid = false;
-            } else {
-                field.classList.remove('is-invalid');
+    // File Upload Display
+    browseBtn.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', () => {
+        fileList.innerHTML = '';
+        Array.from(fileInput.files).forEach(file => {
+            const item = document.createElement('div');
+            item.className = 'file-item';
+            item.innerHTML = `<span>${file.name}</span> <span>(${(file.size / 1024).toFixed(2)} KB)</span>`;
+            fileList.appendChild(item);
+        });
+    });
+
+    // Cancel Handler
+    cancelBtn.addEventListener('click', () => {
+        if (confirm('Are you sure you want to cancel? All entered data will be lost.')) {
+            resetForm();
+        }
+    });
+
+    // Input Validation (Live)
+    form.querySelectorAll('input, select, textarea').forEach(el => {
+        el.addEventListener('input', () => validateField(el));
+        el.addEventListener('blur', () => {
+            if (el.required && !el.value.trim()) {
+                el.classList.add('is-invalid');
             }
         });
+    });
+
+    // Form Submission
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        form.classList.add('was-validated');
+
+        let isValid = requiredFields.every(id => validateField(document.getElementById(id)));
+        isValid &= validateMobile();
+        isValid &= validateEmail();
+        isValid &= validateAccount();
+
+        // Conditionally validate branch
+        if (branchSelect.hasAttribute('required')) {
+            isValid &= validateField(branchSelect);
+        }
+
+        const moreDetailsField = document.getElementById('moreDetails');
+        moreDetailsField.classList.remove('is-invalid', 'is-valid');
 
         if (!isValid) {
-            alert('Please fill in all required fields.');
+            const firstInvalid = form.querySelector('.is-invalid');
+            firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            firstInvalid.focus();
             return;
         }
 
-        // Create FormData object for submission
-        const formData = new FormData(form);
-        formData.append('product', productSelect.value);
-        formData.append('subCategory', subCategorySelect.value);
+        const selectedSubCat = subCategorySelect.value.trim();
+        const assignTo = assignToMap[selectedSubCat] || '';
 
-        // Here you would typically send the formData to your server
-        // For demonstration, we'll just show a success message
-        alert('Support ticket submitted successfully!');
-        
-        // Reset the form
-        form.reset();
-        customerDetailsSection.style.display = 'none';
-        continueBtn.style.display = 'block';
-        subCategorySelect.innerHTML = '<option value="">Choose a sub-category</option>';
-    });
 
-    // Cancel button handler
-    document.getElementById('cancelBtn').addEventListener('click', function() {
-        if (confirm('Are you sure you want to cancel? All entered data will be lost.')) {
-            form.reset();
-            customerDetailsSection.style.display = 'none';
-            continueBtn.style.display = 'block';
-            subCategorySelect.innerHTML = '<option value="">Choose a sub-category</option>';
+
+        const formData = {
+            file: Array.from(fileInput.files).map(f => f.name).join(', ') || 'None', // or handle file upload differently
+            email: form.email.value.trim(),
+            branch: form.branch.value.trim(),
+            assignTo: assignTo, // Fill in dynamically if needed, or leave blank
+            category: productSelect.value.trim(),
+            account_no: form.accountNo.value.trim(),
+            contact_no: form.mobileNo.value.trim(),
+            customer_id: form.customerId.value.trim(),
+            description: form.moreDetails.value.trim() || 'No details provided',
+            ticket_type: subCategorySelect.value.trim(),
+            customer_name: form.customerName.value.trim(),
+            subject: `${productSelect.value.trim()} | ${subCategorySelect.value.trim()}`
+        };
+
+        console.log("The Form Data: ", formData);
+
+
+        try {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Submitting...';
+
+            // Replace this with actual API call
+            const webhookUrl = 'https://teleduce.corefactors.in/support-box/apiwebhook/f2e92185-a8d4-46e0-b82f-30e957826981/GrievanceWebAPI/'
+
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json().catch(() => ({}))
+                console.log("Webhook Response Status: ", response.status);
+                console.log("Webhook Response Data: ", result);
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                alert('Support ticket submitted successfully');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000)
+                return;
+                resetForm();
+            } catch (err) {
+                console.error('Webhook submission failed: ', err);
+                alert('Error submitting the ticket. Please try again later.')
+            }
+
+            console.log('Form Data:', formData);
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            alert('Support ticket submitted successfully! (Simulated)');
+            resetForm();
+        } catch (err) {
+            console.error(err);
+            alert('Error submitting the ticket. Please try again.');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Ticket';
         }
     });
-</script>
 
+    // --- Helper Functions ---
+    function validateField(field) {
+        const value = field.value.trim();
+        field.classList.remove('is-invalid', 'is-valid');
+
+        if (field.required && !value) {
+            field.classList.add('is-invalid');
+            return false;
+        }
+
+        // Field-specific validation
+        if (field.id === 'mobileNo' && value && !/^\d{10}$/.test(value)) {
+            field.classList.add('is-invalid');
+            return false;
+        }
+
+        if (field.id === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+            field.classList.add('is-invalid');
+            return false;
+        }
+
+        if (field.id === 'accountNo' && value && !/^\d{15}$/.test(value)) {
+            field.classList.add('is-invalid');
+            return false;
+        }
+
+        field.classList.add('is-valid');
+        return true;
+    }
+
+
+    function validateMobile() {
+        const mobile = form.mobileNo;
+        if (!/^\d{10}$/.test(mobile.value.trim())) {
+            mobile.classList.add('is-invalid');
+            return false;
+        }
+        mobile.classList.remove('is-invalid');
+        return true;
+    }
+
+    function validateEmail() {
+        const email = form.email;
+        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!pattern.test(email.value.trim())) {
+            email.classList.add('is-invalid');
+            return false;
+        }
+        email.classList.remove('is-invalid');
+        return true;
+    }
+
+    function validateAccount() {
+        const acc = form.accountNo;
+        if (!/^\d{15}$/.test(acc.value.trim())) {
+            acc.classList.add('is-invalid');
+            return false;
+        }
+        acc.classList.remove('is-invalid');
+        return true;
+    }
+
+    function resetForm() {
+        const form = document.getElementById('grievanceForm');
+        form.reset();
+        
+        // Reset specific elements
+        document.getElementById('customerDetailsSection').style.display = 'none';
+        document.getElementById('continueBtn').style.display = 'block';
+        document.getElementById('subCategory').innerHTML = '<option value="">Choose a sub-category</option>';
+        document.getElementById('fileList').innerHTML = '';
+        
+        // Clear validation states
+        form.classList.remove('was-validated');
+        document.querySelectorAll('.is-invalid, .is-valid').forEach(el => {
+            el.classList.remove('is-invalid', 'is-valid');
+        });
+        
+        // Reset file input
+        document.getElementById('fileInput').value = '';
+
+    }
+});
+</script>
 
 </body>
 </html>
